@@ -11,3 +11,49 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.Inputs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: bisque;
+  box-shadow: 5px 5px 15px rgb(214, 214, 214);
+  padding: 10px;
+}
+
+form {
+  position: relative;
+  height: 40px;
+  left: -100px;
+}
+
+.btn {
+  width: 155px;
+  position: relative;
+  left: 200px;
+  top: -30px;
+}
+
+.TableDIV {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30px;
+}
+
+.inp,
+.inp:focus,
+.inp:hover,
+.inp:active {
+  outline: none;
+  box-shadow: none;
+  border: none;
+  text-align: center;
+  width: 30px;
+  cursor: default;
+}
+
+.table {
+  color: black;
+  border-collapse: collapse;
+}
