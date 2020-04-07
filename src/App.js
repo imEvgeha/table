@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import TableCreator from './Components/TableCreator';
+import getWidthTd from './Helpers/getWidthTd';
 
 function App() {
   const [rowsValue, setRowsValue] = useState('');
@@ -7,6 +8,8 @@ function App() {
   const [create, setCreate] = useState(false);
   const [rowsArr, setRowsArr] = useState([]);
   const [linesArr, setLinesArr] = useState([]);
+  const [counter, setCounter] = useState(0);
+  const [trWidth, setTrWidth] = useState(4);
 
   const handleInputsChange = (e) => {
     const name = e.target.name;
@@ -23,6 +26,8 @@ function App() {
     if (rowsValue === '' && linesValue === '') {
       alert('Your table will be deleted');
       setCreate(false);
+      setCounter(0);
+      setTrWidth(4);
       return;
     }
     if (rowsValue < 1 || linesValue < 1 || rowsValue > 30 || linesValue > 30) {
@@ -47,6 +52,15 @@ function App() {
     }
     setRowsArr(arrRows);
     setLinesArr(arrLines);
+  };
+
+  const handleGetWidthTdHelper = (value) => {
+    setCounter(counter + 1);
+    setTrWidth(value);
+  };
+
+  const handleGetWidthTd = (event) => {
+    getWidthTd(event, trWidth, rowsArr, counter, handleGetWidthTdHelper);
   };
 
   return (
@@ -79,7 +93,13 @@ function App() {
         </form>
       </div>
       <div className="TableDIV">
-        <TableCreator rows={rowsArr} lines={linesArr} create={create} />
+        <TableCreator
+          rows={rowsArr}
+          lines={linesArr}
+          create={create}
+          trWidth={trWidth}
+          handleGetWidthTd={handleGetWidthTd}
+        />
       </div>
     </div>
   );

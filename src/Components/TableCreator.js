@@ -1,14 +1,6 @@
 import React, { useState } from 'react';
 
 function TableCreator(props) {
-  const [trWidth, setTrWidth] = useState(4);
-
-  const handleGetWidthTd = (e) => {
-    if (e.target.value.length > trWidth) {
-      setTrWidth(e.target.value.length);
-    }
-  };
-
   return (
     <div>
       {props.create ? (
@@ -22,8 +14,8 @@ function TableCreator(props) {
                       <td>
                         <input
                           className="inp"
-                          onChange={handleGetWidthTd}
-                          style={{ width: trWidth * 7.5 + 'px' }}
+                          onChange={props.handleGetWidthTd}
+                          style={{ width: props.trWidth * 7.5 + 'px' }}
                         ></input>
                       </td>
                     );
