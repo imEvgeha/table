@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function TableCreater(props) {
+function TableCreator(props) {
   const [trWidth, setTrWidth] = useState(4);
 
   const handleGetWidthTd = (e) => {
@@ -40,4 +40,4 @@ function TableCreater(props) {
   );
 }
 
-export default TableCreater;
+export default TableCreator;

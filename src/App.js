@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import TableCreater from './Components/TableCreater';
+import TableCreator from './Components/TableCreator';
 
 function App() {
   const [rowsValue, setRowsValue] = useState('');
@@ -20,8 +20,16 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (rowsValue < 1 || linesValue < 1) return;
-    if (rowsValue > 30 || linesValue > 30) return;
+    if (rowsValue === '' && linesValue === '') {
+      alert('Your table will be deleted');
+      setCreate(false);
+      return;
+    }
+    if (rowsValue < 1 || linesValue < 1 || rowsValue > 30 || linesValue > 30) {
+      alert('Value do not can be  > 30  and  < 1');
+      return;
+    }
+
     setCreate(true);
     setRowsValue('');
     setLinesValue('');
@@ -71,7 +79,7 @@ function App() {
         </form>
       </div>
       <div className="TableDIV">
-        <TableCreater rows={rowsArr} lines={linesArr} create={create} />
+        <TableCreator rows={rowsArr} lines={linesArr} create={create} />
       </div>
     </div>
   );
