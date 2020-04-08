@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TableCreator from './Components/TableCreator';
 import getWidthTd from './Helpers/getWidthTd';
 
@@ -23,7 +23,13 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (rowsValue === '' && linesValue === '') {
+    if (create === true && rowsValue !== '' && linesValue !== '') {
+      alert('You must delete your table before creatind a new one');
+      setRowsValue('');
+      setLinesValue('');
+      return;
+    }
+    if (create === true && rowsValue === '' && linesValue === '') {
       alert('Your table will be deleted');
       setCreate(false);
       setCounter(0);
@@ -31,10 +37,11 @@ function App() {
       return;
     }
     if (rowsValue < 1 || linesValue < 1 || rowsValue > 30 || linesValue > 30) {
-      alert('Value do not can be  > 30  and  < 1');
+      alert('Value do not can be  > 30  or  < 1');
+      setRowsValue('');
+      setLinesValue('');
       return;
     }
-
     setCreate(true);
     setRowsValue('');
     setLinesValue('');
@@ -89,7 +96,15 @@ function App() {
               ></input>
             </b>
           </div>
-          <input type="submit" value="Create" className="btn"></input>
+          <input
+            type="submit"
+            value={
+              create && rowsValue === '' && linesValue === ''
+                ? 'Delete'
+                : 'Create'
+            }
+            className="btn"
+          ></input>
         </form>
       </div>
       <div className="TableDIV">

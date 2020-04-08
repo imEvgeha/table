@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PrivateTd from './PrivateTd';
 
 function TableCreator(props) {
   return (
@@ -11,13 +12,10 @@ function TableCreator(props) {
                 <tr>
                   {props.lines.map(() => {
                     return (
-                      <td>
-                        <input
-                          className="inp"
-                          onChange={props.handleGetWidthTd}
-                          style={{ width: props.trWidth * 7.5 + 'px' }}
-                        ></input>
-                      </td>
+                      <PrivateTd
+                        handleGetWidthTd={props.handleGetWidthTd}
+                        trWidth={props.trWidth}
+                      />
                     );
                   })}
                 </tr>
