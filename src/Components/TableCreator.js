@@ -14,6 +14,7 @@ function TableCreator(props) {
                     return (
                       <PrivateTd
                         handleGetWidthTd={props.handleGetWidthTd}
+                        additionValues={props.additionValues}
                         trWidth={props.trWidth}
                       />
                     );

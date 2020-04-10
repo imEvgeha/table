@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import TableCreator from './Components/TableCreator';
 import getWidthTd from './Helpers/getWidthTd';
+
+const MAX_SIZE_IN_CELLS = 30;
+const DEFAULT_WIDTH_OF_CELLS = 4;
 
 function App() {
   const [rowsValue, setRowsValue] = useState('');
@@ -9,7 +12,8 @@ function App() {
   const [rowsArr, setRowsArr] = useState([]);
   const [linesArr, setLinesArr] = useState([]);
   const [counter, setCounter] = useState(0);
-  const [trWidth, setTrWidth] = useState(4);
+  const [sumInpValue, setSumInpValue] = useState(0);
+  const [trWidth, setTrWidth] = useState(DEFAULT_WIDTH_OF_CELLS);
 
   const handleInputsChange = (e) => {
     const name = e.target.name;
@@ -21,22 +25,44 @@ function App() {
     }
   };
 
+  const _cells_value_is_NaN = (value) => {
+    return value === '' || value[0] === ' ' || isNaN(value) === true;
+  };
+
+  const _table_trying_recreate = () => {
+    return create === true && rowsValue !== '' && linesValue !== '';
+  };
+
+  const _try_delete_table = () => {
+    return create === true && rowsValue === '' && linesValue === '';
+  };
+
+  const _cells_quantity_allowed = () => {
+    return (
+      rowsValue < 1 ||
+      linesValue < 1 ||
+      rowsValue > MAX_SIZE_IN_CELLS ||
+      linesValue > MAX_SIZE_IN_CELLS
+    );
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (create === true && rowsValue !== '' && linesValue !== '') {
+    if (_table_trying_recreate()) {
       alert('You must delete your table before creatind a new one');
       setRowsValue('');
       setLinesValue('');
       return;
     }
-    if (create === true && rowsValue === '' && linesValue === '') {
+    if (_try_delete_table()) {
       alert('Your table will be deleted');
-      setCreate(false);
       setCounter(0);
-      setTrWidth(4);
+      setSumInpValue(0);
+      setCreate(false);
+      setTrWidth(DEFAULT_WIDTH_OF_CELLS);
       return;
     }
-    if (rowsValue < 1 || linesValue < 1 || rowsValue > 30 || linesValue > 30) {
+    if (_cells_quantity_allowed()) {
       alert('Value do not can be  > 30  or  < 1');
       setRowsValue('');
       setLinesValue('');
@@ -48,31 +74,34 @@ function App() {
     createTablesArr();
   };
 
+  const additionValues = (value, sign) => {
+    if (_cells_value_is_NaN(value)) return;
+    value = Number(value);
+    if (sign) {
+      setSumInpValue(sumInpValue + value);
+    } else {
+      setSumInpValue(sumInpValue - value);
+    }
+  };
+
   const createTablesArr = () => {
-    const arrRows = [];
-    const arrLines = [];
-    for (let i = 0; i < rowsValue; i++) {
-      arrRows.push(true);
-    }
-    for (let i = 0; i < linesValue; i++) {
-      arrLines.push(true);
-    }
+    const arrRows = new Array(Number(rowsValue)).fill();
+    const arrLines = new Array(Number(linesValue)).fill();
     setRowsArr(arrRows);
     setLinesArr(arrLines);
   };
 
-  const handleGetWidthTdHelper = (value) => {
-    setCounter(counter + 1);
-    setTrWidth(value);
-  };
-
   const handleGetWidthTd = (event) => {
-    getWidthTd(event, trWidth, rowsArr, counter, handleGetWidthTdHelper);
+    getWidthTd(event, trWidth, rowsArr, counter, (length) => {
+      setCounter(counter + 1);
+      setTrWidth(length);
+    });
   };
 
   return (
     <div className="App">
       <div className="Inputs">
+        <p className="Sum">Sum: {sumInpValue}</p>
         <form onSubmit={handleSubmit}>
           <div>
             <b>
@@ -113,6 +142,7 @@ function App() {
           lines={linesArr}
           create={create}
           trWidth={trWidth}
+          additionValues={additionValues}
           handleGetWidthTd={handleGetWidthTd}
         />
       </div>

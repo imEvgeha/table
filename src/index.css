@@ -31,7 +31,7 @@ form {
   width: 155px;
   position: relative;
   left: 200px;
-  top: -30px;
+  top: -33px;
 }
 
 .TableDIV {
@@ -56,4 +56,10 @@ form {
 .table {
   color: black;
   border-collapse: collapse;
+}
+
+.Sum {
+  font-weight: 700;
+  position: relative;
+  left: -15%;
 }
